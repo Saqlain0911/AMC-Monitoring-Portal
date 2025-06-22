@@ -12,8 +12,7 @@
 
 **Organization:** ADRDE (DRDO), Agra </br>
 **Internship Duration:** 4 Weeks (June 2025)</br>
-**Description:** Team-based project completed on-site during the internship at ADRDE (DRDO).
-</br>
+**Description:** Team project completed at the organization during the internship.</br>
 
 ## Project Overview
 The AMC (Annual Maintenance Contract) Monitoring Portal is a task management system designed to efficiently oversee, schedule, and report daily, weekly, and monthly tracking under AMC agreements. The portal provides role-based access, real-time dashboards, alerts, and compliance tracking to streamline IT infrastructure maintenance.
