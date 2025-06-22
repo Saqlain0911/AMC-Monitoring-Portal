@@ -12,7 +12,7 @@
 
 **Organization:** ADRDE (DRDO), Agra </br>
 **Internship Duration:** 4 Weeks (June 2025)</br>
-**Description:** Team-based project conducted on-site during the internship at ADRDE (DRDO).
+**Description:** Team-based project completed on-site during the internship at ADRDE (DRDO).
 </br>
 
 ## Project Overview
