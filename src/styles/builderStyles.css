@@ -1,0 +1,301 @@
+/* Builder.io Global Styles - AMC Portal Design System Integration */
+
+/* Builder.io content wrapper styling */
+.builder-content {
+  @apply font-sans text-gray-900;
+}
+
+/* Override Builder.io default styles to match AMC Portal */
+.builder-content h1,
+.builder-content .builder-heading-1 {
+  @apply text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-6;
+}
+
+.builder-content h2,
+.builder-content .builder-heading-2 {
+  @apply text-2xl md:text-3xl font-semibold text-gray-900 leading-tight mb-5;
+}
+
+.builder-content h3,
+.builder-content .builder-heading-3 {
+  @apply text-xl md:text-2xl font-semibold text-gray-900 leading-tight mb-4;
+}
+
+.builder-content h4,
+.builder-content .builder-heading-4 {
+  @apply text-lg md:text-xl font-medium text-gray-900 leading-tight mb-3;
+}
+
+.builder-content h5,
+.builder-content .builder-heading-5 {
+  @apply text-base md:text-lg font-medium text-gray-900 leading-tight mb-3;
+}
+
+.builder-content h6,
+.builder-content .builder-heading-6 {
+  @apply text-sm md:text-base font-medium text-gray-900 leading-tight mb-2;
+}
+
+/* Paragraph and text styling */
+.builder-content p,
+.builder-content .builder-text {
+  @apply text-base text-gray-700 leading-relaxed mb-4;
+}
+
+.builder-content .builder-text-large {
+  @apply text-lg text-gray-700 leading-relaxed mb-4;
+}
+
+.builder-content .builder-text-small {
+  @apply text-sm text-gray-600 leading-relaxed mb-3;
+}
+
+/* Link styling to match AMC Portal */
+.builder-content a,
+.builder-content .builder-link {
+  @apply text-indigo-600 hover:text-indigo-800 font-medium underline-offset-2 hover:underline transition-colors duration-200;
+}
+
+/* Button styling */
+.builder-content .builder-button {
+  @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+}
+
+.builder-content .builder-button-primary {
+  @apply bg-indigo-600 text-white hover:bg-indigo-700 h-10 px-4 py-2;
+}
+
+.builder-content .builder-button-secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 h-10 px-4 py-2;
+}
+
+.builder-content .builder-button-outline {
+  @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-10 px-4 py-2;
+}
+
+/* Image styling */
+.builder-content img,
+.builder-content .builder-image {
+  @apply rounded-lg shadow-soft max-w-full h-auto;
+}
+
+/* Card and container styling */
+.builder-content .builder-card {
+  @apply bg-white rounded-lg shadow-soft border border-gray-200 p-6 mb-6;
+}
+
+.builder-content .builder-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.builder-content .builder-section {
+  @apply py-12 md:py-16 lg:py-20;
+}
+
+/* Grid system */
+.builder-content .builder-columns {
+  @apply grid gap-6;
+}
+
+.builder-content .builder-columns-2 {
+  @apply grid-cols-1 md:grid-cols-2;
+}
+
+.builder-content .builder-columns-3 {
+  @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.builder-content .builder-columns-4 {
+  @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-4;
+}
+
+/* Form styling */
+.builder-content form {
+  @apply space-y-4;
+}
+
+.builder-content input,
+.builder-content .builder-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500;
+}
+
+.builder-content textarea,
+.builder-content .builder-textarea {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 min-h-[100px];
+}
+
+.builder-content select,
+.builder-content .builder-select {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500;
+}
+
+.builder-content label,
+.builder-content .builder-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+/* List styling */
+.builder-content ul,
+.builder-content ol {
+  @apply space-y-2 mb-4;
+}
+
+.builder-content ul {
+  @apply list-disc list-inside;
+}
+
+.builder-content ol {
+  @apply list-decimal list-inside;
+}
+
+.builder-content li {
+  @apply text-gray-700 leading-relaxed;
+}
+
+/* Blockquote styling */
+.builder-content blockquote {
+  @apply border-l-4 border-indigo-500 bg-indigo-50 p-4 my-6 italic text-indigo-900;
+}
+
+/* Code styling */
+.builder-content code {
+  @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono;
+}
+
+.builder-content pre {
+  @apply bg-gray-100 p-4 rounded-lg overflow-x-auto text-sm font-mono mb-4;
+}
+
+.builder-content pre code {
+  @apply bg-transparent p-0;
+}
+
+/* Table styling */
+.builder-content table {
+  @apply w-full border-collapse border border-gray-300 mb-6;
+}
+
+.builder-content th,
+.builder-content td {
+  @apply border border-gray-300 px-4 py-2 text-left;
+}
+
+.builder-content th {
+  @apply bg-gray-50 font-semibold text-gray-900;
+}
+
+.builder-content td {
+  @apply text-gray-700;
+}
+
+/* Divider styling */
+.builder-content hr,
+.builder-content .builder-divider {
+  @apply border-0 border-t border-gray-200 my-8;
+}
+
+/* Custom spacing utilities for Builder.io content */
+.builder-content .builder-stack-tight > * + * {
+  margin-top: 0.5rem;
+}
+
+.builder-content .builder-stack-normal > * + * {
+  margin-top: 1rem;
+}
+
+.builder-content .builder-stack-relaxed > * + * {
+  margin-top: 1.5rem;
+}
+
+.builder-content .builder-stack-loose > * + * {
+  margin-top: 2rem;
+}
+
+/* Responsive text scaling */
+@media (max-width: 640px) {
+  .builder-content h1,
+  .builder-content .builder-heading-1 {
+    @apply text-2xl;
+  }
+
+  .builder-content h2,
+  .builder-content .builder-heading-2 {
+    @apply text-xl;
+  }
+
+  .builder-content h3,
+  .builder-content .builder-heading-3 {
+    @apply text-lg;
+  }
+}
+
+/* Animation classes for Builder.io content */
+.builder-fade-in {
+  @apply animate-fade-in;
+}
+
+.builder-slide-in {
+  @apply animate-slide-in;
+}
+
+/* AMC Portal specific Builder.io overrides */
+.builder-content .amc-hero {
+  @apply bg-gradient-to-br from-indigo-600 to-indigo-800 text-white py-16 px-6 rounded-lg;
+}
+
+.builder-content .amc-stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8;
+}
+
+.builder-content .amc-feature-section {
+  @apply bg-gray-50 py-16 px-6 rounded-lg;
+}
+
+.builder-content .amc-cta-section {
+  @apply bg-indigo-600 text-white py-12 px-6 rounded-lg text-center;
+}
+
+.builder-content .amc-testimonial {
+  @apply bg-white p-6 rounded-lg shadow-soft border border-gray-200 italic;
+}
+
+/* Builder.io video styling */
+.builder-content video,
+.builder-content .builder-video {
+  @apply w-full rounded-lg shadow-soft;
+}
+
+/* Builder.io embed styling */
+.builder-content .builder-embed {
+  @apply rounded-lg overflow-hidden shadow-soft;
+}
+
+/* Ensure proper spacing in Builder.io sections */
+.builder-block {
+  @apply mb-6;
+}
+
+.builder-block:last-child {
+  @apply mb-0;
+}
+
+/* Layout containers */
+.builder-content .page-container {
+  @apply container mx-auto px-4 py-6 max-w-7xl;
+}
+
+.builder-content .section-spacing {
+  @apply space-y-6;
+}
+
+/* Print styles for Builder.io content */
+@media print {
+  .builder-content {
+    @apply text-black;
+  }
+
+  .builder-content .amc-hero,
+  .builder-content .amc-cta-section {
+    @apply bg-white text-black border border-gray-300;
+  }
+}

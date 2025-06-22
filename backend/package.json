@@ -1,0 +1,47 @@
+{
+  "name": "amc-portal-backend",
+  "version": "1.0.0",
+  "description": "Backend API server for AMC Portal application",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "dev:fallback": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node migrate-mock-data.js",
+    "init-db": "node database/update-schema.js"
+  },
+  "keywords": [
+    "express",
+    "api",
+    "amc",
+    "task-management",
+    "sqlite",
+    "jwt",
+    "maintenance"
+  ],
+  "author": "AMC Portal Team",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7",
+    "multer": "^2.0.1",
+    "express-validator": "^7.2.1",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "helmet": "^7.2.0",
+    "morgan": "^1.10.0",
+    "form-data": "^4.0.3",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

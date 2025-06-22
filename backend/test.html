@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AMC Portal API Tester</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2563eb;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .test-section {
+        margin: 30px 0;
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background-color: #f9fafb;
+      }
+      .test-section h3 {
+        color: #374151;
+        margin-top: 0;
+      }
+      button {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #1d4ed8;
+      }
+      button:disabled {
+        background-color: #9ca3af;
+        cursor: not-allowed;
+      }
+      .success {
+        background-color: #10b981;
+      }
+      .error {
+        background-color: #ef4444;
+      }
+      .response {
+        background-color: #1f2937;
+        color: #f3f4f6;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      .status {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .status.success {
+        background-color: #d1fae5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+      }
+      .status.error {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fca5a5;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      .form-group {
+        margin: 15px 0;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #374151;
+      }
+      .token-display {
+        background-color: #f0f9ff;
+        border: 1px solid #0ea5e9;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        word-break: break-all;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 AMC Portal API Tester</h1>
+
+      <div class="test-section">
+        <h3>🔍 Server Status</h3>
+        <button onclick="testHealth()">Test Health Check</button>
+        <button onclick="testAPI()">Test API Info</button>
+        <button onclick="testDatabase()">Test Database</button>
+        <div id="status-response"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>🔐 Authentication</h3>
+        <div class="form-group">
+          <label>Username:</label>
+          <input type="text" id="username" value="admin" />
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" id="password" value="admin123" />
+        </div>
+        <button onclick="testLogin()">Login</button>
+        <button onclick="testRegister()">Test Register</button>
+        <button onclick="testProfile()" id="profileBtn" disabled>
+          Get Profile
+        </button>
+
+        <div id="token-display" style="display: none" class="token-display">
+          <strong>JWT Token:</strong> <span id="token-value"></span>
+        </div>
+        <div id="auth-response"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>📋 Tasks</h3>
+        <button onclick="getTasks()" id="getTasksBtn" disabled>
+          Get All Tasks
+        </button>
+        <button onclick="createTestTask()" id="createTaskBtn" disabled>
+          Create Test Task
+        </button>
+        <div id="tasks-response"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>📊 Activities</h3>
+        <button onclick="getActivities()" id="getActivitiesBtn" disabled>
+          Get Activities
+        </button>
+        <button onclick="getActivitySummary()" id="getSummaryBtn" disabled>
+          Get Summary
+        </button>
+        <div id="activities-response"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>🔔 Notifications</h3>
+        <button onclick="getNotifications()" id="getNotificationsBtn" disabled>
+          Get Notifications
+        </button>
+        <button onclick="getUnreadNotifications()" id="getUnreadBtn" disabled>
+          Get Unread
+        </button>
+        <div id="notifications-response"></div>
+      </div>
+    </div>
+
+    <script>
+      const BASE_URL = "http://localhost:3000";
+      let authToken = "";
+
+      async function makeRequest(
+        method,
+        endpoint,
+        data = null,
+        includeAuth = false,
+      ) {
+        try {
+          const options = {
+            method,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+
+          if (includeAuth && authToken) {
+            options.headers["Authorization"] = `Bearer ${authToken}`;
+          }
+
+          if (data) {
+            options.body = JSON.stringify(data);
+          }
+
+          const response = await fetch(`${BASE_URL}${endpoint}`, options);
+          const result = await response.json();
+
+          return { response, result };
+        } catch (error) {
+          return { error: error.message };
+        }
+      }
+
+      function displayResponse(
+        containerId,
+        method,
+        endpoint,
+        response,
+        result,
+        error,
+      ) {
+        const container = document.getElementById(containerId);
+
+        if (error) {
+          container.innerHTML = `
+                    <div class="status error">❌ Error: ${error}</div>
+                `;
+          return;
+        }
+
+        const statusClass = response.status < 400 ? "success" : "error";
+        const statusIcon = response.status < 400 ? "✅" : "❌";
+
+        container.innerHTML = `
+                <div class="status ${statusClass}">
+                    ${statusIcon} ${method} ${endpoint} - Status: ${response.status}
+                </div>
+                <div class="response">${JSON.stringify(result, null, 2)}</div>
+            `;
+      }
+
+      function enableAuthenticatedButtons() {
+        document.getElementById("profileBtn").disabled = false;
+        document.getElementById("getTasksBtn").disabled = false;
+        document.getElementById("createTaskBtn").disabled = false;
+        document.getElementById("getActivitiesBtn").disabled = false;
+        document.getElementById("getSummaryBtn").disabled = false;
+        document.getElementById("getNotificationsBtn").disabled = false;
+        document.getElementById("getUnreadBtn").disabled = false;
+
+        document.getElementById("token-display").style.display = "block";
+        document.getElementById("token-value").textContent =
+          authToken.substring(0, 50) + "...";
+      }
+
+      // Status Tests
+      async function testHealth() {
+        const { response, result, error } = await makeRequest("GET", "/health");
+        displayResponse(
+          "status-response",
+          "GET",
+          "/health",
+          response,
+          result,
+          error,
+        );
+      }
+
+      async function testAPI() {
+        const { response, result, error } = await makeRequest("GET", "/api");
+        displayResponse(
+          "status-response",
+          "GET",
+          "/api",
+          response,
+          result,
+          error,
+        );
+      }
+
+      async function testDatabase() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/test/database",
+        );
+        displayResponse(
+          "status-response",
+          "GET",
+          "/api/test/database",
+          response,
+          result,
+          error,
+        );
+      }
+
+      // Authentication Tests
+      async function testLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const { response, result, error } = await makeRequest(
+          "POST",
+          "/api/auth/login",
+          {
+            username,
+            password,
+          },
+        );
+
+        displayResponse(
+          "auth-response",
+          "POST",
+          "/api/auth/login",
+          response,
+          result,
+          error,
+        );
+
+        if (result && result.token) {
+          authToken = result.token;
+          enableAuthenticatedButtons();
+        }
+      }
+
+      async function testRegister() {
+        const { response, result, error } = await makeRequest(
+          "POST",
+          "/api/auth/register",
+          {
+            username: "testuser" + Date.now(),
+            password: "TestPass123!",
+            email: "test@example.com",
+            full_name: "Test User",
+            role: "user",
+          },
+        );
+
+        displayResponse(
+          "auth-response",
+          "POST",
+          "/api/auth/register",
+          response,
+          result,
+          error,
+        );
+      }
+
+      async function testProfile() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/auth/me",
+          null,
+          true,
+        );
+        displayResponse(
+          "auth-response",
+          "GET",
+          "/api/auth/me",
+          response,
+          result,
+          error,
+        );
+      }
+
+      // Task Tests
+      async function getTasks() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/tasks",
+          null,
+          true,
+        );
+        displayResponse(
+          "tasks-response",
+          "GET",
+          "/api/tasks",
+          response,
+          result,
+          error,
+        );
+      }
+
+      async function createTestTask() {
+        const { response, result, error } = await makeRequest(
+          "POST",
+          "/api/tasks",
+          {
+            title: "Test Task from Web UI",
+            description: "This task was created from the web test interface",
+            status: "pending",
+            priority: "medium",
+          },
+          true,
+        );
+
+        displayResponse(
+          "tasks-response",
+          "POST",
+          "/api/tasks",
+          response,
+          result,
+          error,
+        );
+      }
+
+      // Activity Tests
+      async function getActivities() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/activities",
+          null,
+          true,
+        );
+        displayResponse(
+          "activities-response",
+          "GET",
+          "/api/activities",
+          response,
+          result,
+          error,
+        );
+      }
+
+      async function getActivitySummary() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/activities/summary",
+          null,
+          true,
+        );
+        displayResponse(
+          "activities-response",
+          "GET",
+          "/api/activities/summary",
+          response,
+          result,
+          error,
+        );
+      }
+
+      // Notification Tests
+      async function getNotifications() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/notifications",
+          null,
+          true,
+        );
+        displayResponse(
+          "notifications-response",
+          "GET",
+          "/api/notifications",
+          response,
+          result,
+          error,
+        );
+      }
+
+      async function getUnreadNotifications() {
+        const { response, result, error } = await makeRequest(
+          "GET",
+          "/api/notifications/unread",
+          null,
+          true,
+        );
+        displayResponse(
+          "notifications-response",
+          "GET",
+          "/api/notifications/unread",
+          response,
+          result,
+          error,
+        );
+      }
+
+      // Auto-test on page load
+      window.onload = function () {
+        testHealth();
+      };
+    </script>
+  </body>
+</html>
